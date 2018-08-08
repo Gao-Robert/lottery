@@ -1,4 +1,6 @@
 # promote
+# change index.html path first:add 2 /shlife_loan to index.html  ;1 to webBridge.js
+# production confilct proxyTable,so when production,shut proxyTable down
 
 > A Vue.js project
 

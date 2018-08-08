@@ -13,8 +13,14 @@ function resolve (dir) {
 module.exports = {
   context: path.resolve(__dirname, '../'),
   entry: {
-    app: './src/main.js'
+    // app: './src/main.js' //原来的入口 
+    app: [
+      'whatwg-fetch',
+      // 'babel-polyfill', 
+      './src/main.js'
+    ]//最新的入口 
   },
+
   output: {
     path: config.build.assetsRoot,
     filename: '[name].js',

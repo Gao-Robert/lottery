@@ -4,10 +4,11 @@
             马上邀请赢奖励
     </div>
     <ul id="content" ref="content">
-        <li class="scheme1" :class="{'current1':currentIndex===0}"><span>2000元京东购物卡</span></li>
-        <li class="scheme2" :class="{'current2':currentIndex===1}"><span>500元京东购物卡</span></li>
-        <li class="scheme3" :class="{'current3':currentIndex===2}"><span>爱奇艺月卡</span></li>
-        <li class="scheme4" :class="{'current4':currentIndex===3}"><span>谢谢惠顾</span></li>
+        <li class="scheme1" :class="{'current1':currentIndex===0,'current1S':clickDraw}"><span>2000元京东购物卡</span></li>
+        <!-- <li class="scheme1" :class="{'current1':currentIndex===0}"><span>2000元京东购物卡</span></li> -->
+        <li class="scheme2" :class="{'current2':currentIndex===1,'current2S':clickDraw}"><span>500元京东购物卡</span></li>
+        <li class="scheme3" :class="{'current3':currentIndex===2,'current3S':clickDraw}"><span>爱奇艺月卡</span></li>
+        <li class="scheme4" :class="{'current4':currentIndex===3,'current4S':clickDraw}"><span>谢谢惠顾</span></li>
 	  </ul>
     <div @click="draw" class="btn" id="begin">
     立即抽奖
@@ -29,12 +30,15 @@
 </template>
 <script>
 import {mapGetters} from 'vuex'
+import { urlParse } from '../../common/js/util';
 export default {
   
   data() {
     return {
+      clickDraw:true,
       shareEntrance:null,
       shareWay:null,
+      watchIt:null,
       phoneNo:"",
       remain: null,
       index: 0,
@@ -86,7 +90,7 @@ export default {
           }
         })
         .catch(function(ex) {
-          console.log("parsing failed", ex);
+          alert("parsing failed", ex);
         });
     },
      remainDraw() {
@@ -103,6 +107,7 @@ export default {
           console.log("remainDraw", json);
           if (json.result == "0") {
             this.remainData = json.data.residueDegree; //当日剩余次数
+            // alert(`请求剩余抽奖次数${this.remainData}`);
             this.shareDegree = json.data.shareDegree; //当日分享次数
             this.lottoDegree = json.data.lottoDegree; //当日已抽奖次数
           } else {
@@ -145,8 +150,8 @@ export default {
     //                   }
     //               },100);
     // },
-    async draw() {
-        await this.remainDraw()
+    draw() {
+        
         if (this.remainData == 0) {
           this.fold = false;
           this.winning = true;
@@ -159,6 +164,7 @@ export default {
           }
           return
         }else{
+          this.clickDraw = false
           // fetch(`/api/luckyDraw?phoneNo=${this.phoneNo}`)
           fetch(`/shlife_loan/luckyDraw?phoneNo=${this.phoneNo}`)
           .then(function(response) {
@@ -180,6 +186,9 @@ export default {
             console.log(this.prizeIndex);
             this.prizeSrc = require(`./p${this.prizeIndex}.png`);
           })
+          .then(() => {
+            this.remainDraw()
+          })
           .catch(function(ex) {
             console.log("抽奖请求错误", ex);
           });
@@ -198,6 +207,7 @@ export default {
             }
           }, 100);
         }
+        
     },
     shareBtn() {
       fetch(
@@ -225,34 +235,48 @@ export default {
           console.log("parsing failed", ex);
         })
     },
+    saveShare(){
+      // alert("进入saveShare方法")
+      let saveShareAPI = `/shlife_loan/saveShare?phoneNo=${this.phoneNo}&shareWay=${this.shareWay}&shareEntrance=${this.shareEntrance}`
+      // alert(saveShareAPI)
+      fetch(
+          saveShareAPI
+      )
+      // fetch(
+      //     `/shlife_loan/saveShare?phoneNo=${this.phoneNo}&shareWay=null&shareEntrance=1`
+      // )
+          .then(function(response) {
+            // alert("saveShareAPI",response);
+            return response.json();
+          })
+          .then(json => {
+            console.log(json);
+            if (json.result == "0") {
+              // alert("保存分享数据成功")
+              console.log("保存分享数据成功")
+            } else {
+              alert("保存分享数据失败");
+            }
+          })
+          .then(() =>{
+            this.remainDraw()
+          })
+          .catch(function(ex) {
+            console.log("parsing failed", ex);
+          });
+    },
     hideList() {
       this.fold = true;
       this.winning = false;
     }
   },
+  
   watch:{
-    shareWay:(newValue,oldValue)=>{
-      console.log("newValue",newValue)
-      console.log("oldValue",oldValue)
-      fetch(
-        `/shlife_loan/saveShare?phoneNo=${this.phoneNo}&shareWay=${newValue}&shareEntrance=${this.shareEntrance}`
-      
-      )
-        .then(function(response) {
-          return response.json();
-        })
-        .then(json => {
-          console.log(json);
-          if (json.result == "0") {
-            alert("保存分享数据成功")
-          } else {
-            alert("保存分享数据失败");
-          }
-        })
-        .catch(function(ex) {
-          console.log("parsing failed", ex);
-        });
-      this.remainDraw()
+    watchIt(newValue,oldValue){
+      // alert(newValue)
+      this.shareWay = window.TYPE
+      this.saveShare()
+      this.hideList()
     }
   },
   computed: {
@@ -267,17 +291,18 @@ export default {
     ])
   },
   mounted() {
-    
     setInterval(()=>{
-      this.shareWay = window.TYPE
-    },5000)
-    if(DEVELEPMENT){
-      this.phoneNo = "15010495133"
-    }else{
-      this.phoneNo = this.$route.query.phoneNo
-      this.shareEntrance = this.$route.query.shareEntrance
-    }
-    console.log(this.phoneNo)
+      this.watchIt = window.WATCHIT
+    },500)
+    console.log("this.watchIt",this.watchIt)
+    // if(DEVELEPMENT){
+    //   this.phoneNo = "15010495133"
+    // }else{
+    //   let queryParam = urlParse();
+    //     this.phoneNo = queryParam.phoneNo;
+    // }
+    this.phoneNo = urlParse().phoneNo
+    this.shareEntrance = urlParse().shareEntrance
     this.getInfor()
     this.remainDraw()
   }
@@ -327,12 +352,17 @@ export default {
 .current1 {
   background-image: url("c0.png");
 }
+.current1S {
+  background-image: url("c0.png");
+}
 .scheme2 {
   background-image: url("1.png");
   background-size: 150px 168px;
   background-repeat: no-repeat;
 }
 .current2 {
+  background-image: url("c1.png");
+}.current2S {
   background-image: url("c1.png");
 }
 .scheme3 {
@@ -343,12 +373,18 @@ export default {
 .current3 {
   background-image: url("c2.png");
 }
+.current3S {
+  background-image: url("c2.png");
+}
 .scheme4 {
   background-image: url("3.png");
   background-size: 150px 168px;
   background-repeat: no-repeat;
 }
 .current4 {
+  background-image: url("c3.png");
+}
+.current4S {
   background-image: url("c3.png");
 }
 #content li.current {

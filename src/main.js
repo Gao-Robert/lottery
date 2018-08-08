@@ -2,7 +2,9 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import App from './App'
-import store from './store';
+import store from './store'
+
+import 'whatwg-fetch' // 兼容安卓4.4
 
 
 

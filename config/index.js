@@ -12,20 +12,20 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
-       '/shlife_loan': {
-            target: 'http://192.168.10.210:8080/shlife_loan/',
-            changeOrigin: true,
-            pathRewrite: {
-              '^/shlife_loan': ''
-            },
-        },
-        '/api': {
-            target: 'http://localhost:3000',
-            changeOrigin:true,
-            pathRewrite: {
-              '^/api': ''
-            }
-        },
+      //  '/shlife_loan': {
+      //       target: 'http://192.168.10.210:8080',
+      //       changeOrigin: true,
+      //       pathRewrite: {
+      //         // '^/shlife_loan': ''
+      //       },
+      //   },
+        // '/api': {
+        //     target: 'http://localhost:3000',
+        //     changeOrigin:true,
+        //     pathRewrite: {
+        //       '^/api': ''
+        //     }
+        // },
     },
 
     // Various Dev Server settings
@@ -59,7 +59,7 @@ module.exports = {
     // Paths
     assetsRoot: path.resolve(__dirname, '../dist'),
     assetsSubDirectory: 'static',
-    assetsPublicPath: '/',
+    assetsPublicPath: '/shlife_loan/',
 
     /**
      * Source Maps
