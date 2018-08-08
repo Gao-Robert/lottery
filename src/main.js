@@ -6,11 +6,8 @@ import store from './store'
 
 import 'whatwg-fetch' // 兼容安卓4.4
 
-
-
 Vue.config.productionTip = false
-
-Vue.prototype.$appName = window.a
+Vue.config.performance = true
 
 /* eslint-disable no-new */
 new Vue({

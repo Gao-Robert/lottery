@@ -19,3 +19,5 @@ export function urlParse() {
     }
     return obj;
   };
+  // import Vue from 'vue'
+  // export const EventBus = new Vue()

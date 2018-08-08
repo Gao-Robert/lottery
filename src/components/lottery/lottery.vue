@@ -1,6 +1,6 @@
 <template>
 <div class="plug">
-    <div class="shareBtn" @click="shareBtn">
+    <div  class="shareBtn" @click="shareBtn">
             马上邀请赢奖励
     </div>
     <ul id="content" ref="content">
@@ -35,6 +35,7 @@ export default {
   
   data() {
     return {
+     
       clickDraw:true,
       shareEntrance:null,
       shareWay:null,
@@ -56,20 +57,6 @@ export default {
     };
   },
   methods: {
-    // test(){
-    //   fetch(
-    //     "/api/luckyDraw"
-    //   )
-    //     .then(function(response) {
-    //       return response.json();
-    //     })
-    //     .then(json => {
-    //      console.log("dbJson",json)
-    //     })
-    //     .catch(function(ex) {
-    //       console.log("parsing failed", ex);
-    //     });
-    // },
     getInfor() {
       fetch(
         `/shlife_loan/lotteryNum?phoneNo=${this.phoneNo}`
@@ -151,7 +138,6 @@ export default {
     //               },100);
     // },
     draw() {
-        
         if (this.remainData == 0) {
           this.fold = false;
           this.winning = true;
@@ -191,6 +177,7 @@ export default {
           })
           .catch(function(ex) {
             console.log("抽奖请求错误", ex);
+            alert("抽奖请求错误", ex);
           });
           var list = this.$refs.content.children;
           this.remain = 3000;
@@ -210,6 +197,8 @@ export default {
         
     },
     shareBtn() {
+      
+      
       fetch(
         `/shlife_loan/getData?phoneNo=${this.phoneNo}`
       )
@@ -229,7 +218,8 @@ export default {
           }
         })
         .then(() => {
-          share(this.url,this.imageUrl, this.title, this.descr);
+          share(this.url,this.imageUrl, this.title, this.descr)
+          
         })
         .catch(function(ex) {
           console.log("parsing failed", ex);
@@ -268,6 +258,7 @@ export default {
     hideList() {
       this.fold = true;
       this.winning = false;
+     
     }
   },
   
@@ -291,10 +282,12 @@ export default {
     ])
   },
   mounted() {
-    setInterval(()=>{
-      this.watchIt = window.WATCHIT
-    },500)
-    console.log("this.watchIt",this.watchIt)
+    // setInterval(()=>{
+    //   this.watchIt = window.WATCHIT
+    // },500)
+    // console.log("this.watchIt",this.watchIt)
+
+
     // if(DEVELEPMENT){
     //   this.phoneNo = "15010495133"
     // }else{
