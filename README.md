@@ -2,6 +2,14 @@
 # change index.html path first:add 2 /shlife_loan to index.html  ;1 to webBridge.js
 # production confilct proxyTable,so when production,shut proxyTable down
 
+# test url
+# http://0.0.0.0:8081/h5ToShare?phoneNo=15010495133&shareEntrance=1
+
+# 本地svn地址
+# D:\首航\lifeLoan\src\main\webapp
+
+
+
 > A Vue.js project
 
 ## Build Setup

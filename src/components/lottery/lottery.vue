@@ -35,7 +35,6 @@ export default {
   
   data() {
     return {
-     
       clickDraw:true,
       shareEntrance:null,
       shareWay:null,
@@ -197,8 +196,6 @@ export default {
         
     },
     shareBtn() {
-      
-      
       fetch(
         `/shlife_loan/getData?phoneNo=${this.phoneNo}`
       )
@@ -277,17 +274,14 @@ export default {
     },
     ...mapGetters([
       'total',
-      
       // ...
     ])
   },
   mounted() {
-    // setInterval(()=>{
-    //   this.watchIt = window.WATCHIT
-    // },500)
-    // console.log("this.watchIt",this.watchIt)
-
-
+    setInterval(()=>{
+      this.watchIt = window.WATCHIT
+    },500)
+    console.log("this.watchIt",this.watchIt)
     // if(DEVELEPMENT){
     //   this.phoneNo = "15010495133"
     // }else{
