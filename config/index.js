@@ -12,13 +12,13 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
-       '/shlife_loan': {
-            target: 'http://192.168.10.210:8080',
-            changeOrigin: true,
-            pathRewrite: {
-              // '^/shlife_loan': ''
-            },
-        },
+      //  '/shlife_loan': {
+      //       target: 'http://192.168.10.210:8080',
+      //       changeOrigin: true,
+      //       pathRewrite: {
+      //         // '^/shlife_loan': ''
+      //       },
+      //   },
        
         // '/api': {
         //     target: 'http://localhost:3000',

@@ -10,7 +10,10 @@
         <li class="scheme3" :class="{'current3':currentIndex===2,'current3S':clickDraw}"><span>爱奇艺月卡</span></li>
         <li class="scheme4" :class="{'current4':currentIndex===3,'current4S':clickDraw}"><span>谢谢惠顾</span></li>
 	  </ul>
-    <div @click="draw" class="btn" id="begin">
+    <div v-if="onceDraw" @click="draw" class="btn" id="begin">
+    立即抽奖
+    </div>
+    <div v-else  class="btn" id="begin">
     立即抽奖
     </div>
     <!-- <div @click="test" class="btn" id="begin">
@@ -35,6 +38,7 @@ export default {
   
   data() {
     return {
+      onceDraw:true,
       clickDraw:true,
       shareEntrance:null,
       shareWay:null,
@@ -137,6 +141,7 @@ export default {
     //               },100);
     // },
     draw() {
+        this.onceDraw = false
         if (this.remainData == 0) {
           this.fold = false;
           this.winning = true;
@@ -253,15 +258,16 @@ export default {
           });
     },
     hideList() {
-      this.fold = true;
-      this.winning = false;
+      this.fold = true
+      this.winning = false
+      this.onceDraw = true
      
     }
   },
   
   watch:{
     watchIt(newValue,oldValue){
-      // alert(newValue)
+      // alert("data.tag改变")
       this.shareWay = window.TYPE
       this.saveShare()
       this.hideList()
