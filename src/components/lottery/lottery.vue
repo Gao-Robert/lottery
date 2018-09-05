@@ -33,7 +33,7 @@
 </template>
 <script>
 import {mapGetters} from 'vuex'
-import { urlParse } from '../../common/js/util';
+import { urlParse } from '../../common/js/util'
 export default {
   
   data() {

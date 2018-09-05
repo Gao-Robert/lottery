@@ -129,6 +129,7 @@ export default {
       margin-top:54px;
       text-align:left;
       color:white;
+      line-height: 5.667vw;
     }
   }
 }
