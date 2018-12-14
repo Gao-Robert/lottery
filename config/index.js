@@ -19,6 +19,13 @@ module.exports = {
       //         // '^/shlife_loan': ''
       //       },
       //   },
+      //  '/shlife_loan': {
+      //       target: 'https://test.crfchina.com',
+      //       changeOrigin: true,
+      //       pathRewrite: {
+      //         // '^/shlife_loan': ''
+      //       },
+      //   },
        
         // '/api': {
         //     target: 'http://localhost:3000',

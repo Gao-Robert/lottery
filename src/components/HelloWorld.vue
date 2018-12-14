@@ -65,7 +65,7 @@ export default {
     padding-top:750px;
     box-sizing: border-box;
     width:750px;
-    height:100%;
+    height:2963px;
     background-image:url('bg.png');
     background-size: 750px 100%;
     background-repeat: no-repeat;

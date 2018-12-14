@@ -56,7 +56,8 @@ export default {
       // baseUrl:"http://192.168.10.210:8080/shlife_loan/",
       remainData: null,
       shareDegree: null, //当日分享次数
-      lottoDegree: null //当日已抽奖次数
+      lottoDegree: null, //当日已抽奖次数
+      gotPrize:1
     };
   },
   methods: {
@@ -163,12 +164,15 @@ export default {
           .then(json => {
             console.log(json);
             if (json.result == "0") {
-              this.prizeIndex = 3;
-            } else if (json.result == "1") {
-              if ((json.data.giftNum = 1)) {
-                this.prizeIndex = 0;
-              } else if ((json.data.giftNum = 2)) {
-                this.prizeIndex = 1;
+              if(json.data == ''){
+                this.prizeIndex = 3;  
+              }else{
+                  this.gotPrize = 2
+                  if ((json.data.giftNum = 1)) {
+                  this.prizeIndex = 0;
+                } else if ((json.data.giftNum = 2)) {
+                  this.prizeIndex = 1;
+                }
               }
             }
           })
@@ -202,7 +206,7 @@ export default {
     },
     shareBtn() {
       fetch(
-        `/shlife_loan/getData?phoneNo=${this.phoneNo}`
+        `/shlife_loan/getData?phoneNo=${this.phoneNo}&flag=${this.gotPrize}`
       )
         .then(function(response) {
           return response.json();
@@ -414,7 +418,7 @@ export default {
   width: 480px;
   height: 750px;
   position: fixed;
-  top: 294px;
+  top: 30vw;
   left: 50%;
   margin-left: -240px;
 }
